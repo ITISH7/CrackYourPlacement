@@ -1,0 +1,74 @@
+question 54 leetcode
+
+Given an m x n matrix, return all elements of the matrix in spiral order.
+
+Example 1:
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+Example 2:
+Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+Constraints:
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 10
+-100 <= matrix[i][j] <= 100
+
+
+Approach
+take 4 variables 
+startingrow ,endingrow, startingcol, endingcol
+and intizialise this with respected values in the beginning
+take 2 more variables to store current count and total number of cells in matrix
+
+loop until count> totalnumber of cells in matrix
+
+now follow pattern
+ insert 1st row elements then increase starting row variable by 1 
+ 
+then insert endingcolvalues and descrease the ending variable by 1 
+then insert ending row values than decrease ending row variable by 1
+then insert starting col values and increase starting col variable by 1
+
+
+
+Solution
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+          int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int> sol;
+        int count=0;
+        int startingrow=0;
+        int endingcol=n-1;
+        int endingrow=m-1;
+        int startingcol=0;
+        int product = m*n;
+        while(count!=product){
+            for(int i=startingcol;i<=endingcol&&count<product;i++){
+                sol.push_back(matrix[startingrow][i]);
+                count++;
+            }
+            startingrow++;
+            for(int i=startingrow;i<=endingrow&&count<product;i++){
+                sol.push_back(matrix[i][endingcol]);
+                count++;
+            }
+            endingcol--;
+            for(int i=endingcol;i>=startingcol&&count<product;i--){
+                sol.push_back(matrix[endingrow][i]);
+                count++;
+            }
+            endingrow--;
+            for(int i=endingrow;i>=startingrow&&count<product;i--){
+                sol.push_back(matrix[i][startingcol]);
+                count++;
+            }
+            startingcol++;
+        }
+        return sol;
+    }
+};
+
