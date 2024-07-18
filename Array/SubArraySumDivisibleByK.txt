@@ -1,0 +1,86 @@
+Question 974 leetcode
+
+Given an integer array nums and an integer k, return the number of non-empty subarrays that have a sum divisible by k.
+
+A subarray is a contiguous part of an array.
+
+ 
+
+Example 1:
+
+Input: nums = [4,5,0,-2,-3,1], k = 5
+Output: 7
+Explanation: There are 7 subarrays with a sum divisible by k = 5:
+[4, 5, 0, -2, -3, 1], [5], [5, 0], [5, 0, -2, -3], [0], [0, -2, -3], [-2, -3]
+Example 2:
+
+Input: nums = [5], k = 9
+Output: 0
+ 
+
+Constraints:
+
+1 <= nums.length <= 3 * 104
+-104 <= nums[i] <= 104
+2 <= k <= 104
+
+APPROACH 1
+
+find all posible solution and get the sum %k if it is equal to zero then increase the count and return final count 
+ it will take o(n^2) time and will get rejected 
+
+APPROACH 2 Prefix sum
+in this you will need an extra space to store reminder and its count key as reminder and value as number of time it is appered
+
+initiase map[0]=1;
+it means you have 0 as reminder which is occured atleast 1 time 
+it is an assumption
+
+initialise ans = 0 ;
+use a for loop and find the sum at each index
+take the reminder after modulo operation with k and sum
+
+
+now add answer with the value of map[reminder] 
+why? because the value contain the number of times the reminder appered ,
+but what does it represent?
+it represent number of sub array till index which are either equal to k or divisible by k 
+
+after adding ans with value of map[reminder];
+increase the map[reminder] value by 1;
+
+this is how you will end up with answer having your required solution 
+
+but here is a catch it will work great with positive sum but fail in negative reminder 
+so to make reminder positive if it is negative than add k with reminder ?
+why adding and not using absolute because reminders and division do not work the same way as adding and subtration 
+
+for eg : you have 2 as reminder and -2 as reminder with a number which is divisible by suppose 6
+
+so you cant just take absoute value of -2 to get 2 
+
+instead you need to add -2 +6 = 4 that is +ve reminder of -2 
+
+Solution 
+
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        int size=nums.size();
+        int prevsum=0;
+        int reminder=0;
+        int ans=0;
+        unordered_map<int,int> map;
+        map[0]=1;
+        for(int i=0;i<size;i++){
+            prevsum = prevsum+nums[i];
+            reminder=prevsum%k;
+            if(reminder<0){
+                reminder+=k;
+            }
+            ans=ans+map[reminder];
+            map[reminder]++; 
+        }
+        return ans;
+    }
+};
