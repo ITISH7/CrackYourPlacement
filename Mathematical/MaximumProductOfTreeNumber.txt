@@ -1,0 +1,30 @@
+question 628 leetcode
+
+approach 
+sort the elements 
+get 2 minimum number and 3 maximum number 
+do the product of 2 min and max number as well as 3 max number 
+
+which product is maximum from both is our solution
+
+class Solution {
+public:
+    int maximumProduct(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int size=nums.size();
+        long long prod2=1;
+        prod2*=nums[size-3];;
+        prod2*=nums[size-2];
+        prod2*=nums[size-1];
+
+        long long prod1=1;
+        prod1*=nums[0];
+        prod1*=nums[1];
+        prod1*=nums[size-1];
+        
+        if(prod1<prod2){
+            prod1=prod2;
+        }
+        return prod1;
+    }
+};
