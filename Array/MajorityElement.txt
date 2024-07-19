@@ -1,0 +1,46 @@
+question 169 leetcode
+
+Approach 1 o(nlogn solution)
+
+sort the element then find the element who is at n/2 position;
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int size=nums.size();
+        return nums[size/2]
+    }
+};
+
+
+Approach 1 O(n) solution
+
+using moore voting solution 
+
+as we know what happen in voting we vote for our candidate and than we count whose votes are more 
+in other way we can think like our candidate is best and other is worst so we increase the count when we find our candidate and if we got any other candidate then we decrease the count and if the count comes to zero then the number at which we are currently became new candidate 
+
+in this way as we know that number which is more than n/2 will win because that number will have atleast 1 more than other 
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int count = 0;
+        int candidate = 0;
+        
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+            
+            if (num == candidate) {
+                count++;
+            } else {
+                count--;
+            }
+        }
+        
+        return candidate;
+    }
+};
