@@ -1,0 +1,35 @@
+link
+https://www.geeksforgeeks.org/print-all-the-duplicates-in-the-input-string/
+
+Given a string S, the task is to print all the duplicate characters with their occurrences in the given string.
+
+Example:
+
+Input: S = “geeksforgeeks”
+Output:
+
+e, count = 4
+g, count = 2
+k, count = 2
+s, count = 2
+
+Explanation: e,g,k,and s are characters which are occured in string in more than one times.
+
+Solution 
+
+#include <iostream>
+#include <unordered_map>
+#include <string>
+using namespace std;
+int main() {
+    string str = "hello hunny bunny";
+    unordered_map<char,int> map;
+    for(char c : str){
+        map[c]+=1;
+    }
+    for(auto elem :map){
+        if(elem.second >1 && elem.first!=' ')
+        cout<<elem.first <<" count ="<<elem.second<<endl;
+    }
+    return 0;
+}
