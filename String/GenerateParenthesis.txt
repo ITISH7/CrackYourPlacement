@@ -16,7 +16,6 @@ Output: ["()"]
  Solution:- 
  class Solution {
 public:
-
     vector<string> generateParenthesis(int n) {
         vector<string>ans;
         func(ans,n,0,0,"");
