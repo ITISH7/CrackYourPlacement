@@ -1,0 +1,62 @@
+gfg :-
+https://www.geeksforgeeks.org/problems/steps-by-knight5927/1
+
+Given a square chessboard, the initial position of Knight and position of a target. Find out the minimum steps a Knight will take to reach the target position.
+
+Note:
+The initial and the target position coordinates of Knight have been given according to 1-base indexing.
+
+ 
+ class Solution 
+{
+    public:
+    //Function to find out minimum steps Knight needs to reach target position.
+    bool issafe(int row, int col, int N ,vector<vector<bool>> &visited){
+        if(row>0&&col>0&&row<=N&&col<=N&&visited[row][col]!=true){
+            return true;
+        }
+        return false;
+    }
+	int minStepToReachTarget(vector<int>&KnightPos,vector<int>&TargetPos,int N)
+	{
+	    int curr_row = KnightPos[0];
+	    int curr_col =KnightPos[1];
+	    int target_row = TargetPos[0];
+	    int target_col = TargetPos[1];
+	    vector<vector<bool>>visited(N+1,vector<bool>(N+1,false));
+	    if(curr_row==target_row&&curr_col==target_col){
+	        return 0;
+	    }
+	    int ans = 0;
+	    visited[curr_row][curr_col]=true;
+	    queue<pair<int,int>> q;
+	    q.push({curr_row,curr_col});
+	    while(!q.empty()){
+	        int size= q.size();
+	        ans++;
+	        while(size--){
+	           int curr_row = q.front().first;
+	           int curr_col=q.front().second;
+	           q.pop();
+	           int moverow[] ={1,2,-1,-2,-1,1,2,-2};
+	           int movecol[] ={2,1,2,1,-2,-2,-1,-1};
+	           for(int i=0;i<8;i++){
+	               int new_row=curr_row+moverow[i];
+	               int new_col=curr_col+movecol[i];
+	               if(new_row==target_row&&new_col==target_col){
+	                   return ans;
+	               }
+	               if(issafe(new_row,new_col,N,visited)){
+	                   q.push({new_row,new_col});
+	                   visited[new_row][new_col]=true;
+	
+	               }
+	               
+	           }
+	        }
+	        
+	         
+	    }
+	    return -1;
+	}
+};
