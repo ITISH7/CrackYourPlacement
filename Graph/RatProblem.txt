@@ -1,0 +1,55 @@
+Question gfg :-
+https://www.geeksforgeeks.org/segmentation-fault-c-cpp/#causes-of-segmentation-fault-in-c
+
+Consider a rat placed at (0, 0) in a square matrix mat of order n* n. It has to reach the destination at (n - 1, n - 1). Find all possible paths that the rat can take to reach from source to destination. The directions in which the rat can move are 'U'(up), 'D'(down), 'L' (left), 'R' (right). Value 0 at a cell in the matrix represents that it is blocked and rat cannot move to it while value 1 at a cell in the matrix represents that rat can be travel through it.
+Note: In a path, no cell can be visited more than one time. If the source cell is 0, the rat cannot move to any other cell. In case of no path, return an empty list. The driver will output "-1" automatically.
+
+
+solution:-
+
+class Solution {
+  public:
+  bool issafe(int row, int col ,vector<vector<int>> &mat,vector<vector<bool>> &visited,int n  ){
+      if(row>=0&&row<n&&col>=0&&col<n&&mat[row][col]==1&&visited[row][col]!=1){
+          return true;
+      }
+      return false;
+  }
+  void backtracking(int curr_row ,int curr_col,vector<vector<int>> &mat,vector<string> &ans, vector<vector<bool>> &visited , string path){
+      int n = mat.size();
+      if(curr_row == n-1&& curr_col ==n-1){
+          ans.push_back(path);
+          return;
+      }
+      visited[curr_row][curr_col]=1;
+      //down
+      if(issafe(curr_row+1,curr_col,mat,visited,n)){
+          backtracking(curr_row+1,curr_col,mat, ans, visited , path+'D');
+      }
+      //left
+      if(issafe(curr_row,curr_col-1,mat,visited,n)){
+          backtracking(curr_row,curr_col-1,mat, ans, visited , path+'L');
+      }
+      //right
+      if(issafe(curr_row,curr_col+1,mat,visited,n)){
+          backtracking(curr_row,curr_col+1,mat, ans, visited , path+'R');
+      }
+      //up
+      if(issafe(curr_row-1,curr_col,mat,visited,n)){
+          backtracking(curr_row-1,curr_col,mat, ans, visited , path+'U');
+      }
+      
+      visited[curr_row][curr_col]=0;
+  }
+    vector<string> findPath(vector<vector<int>> &mat) {
+        vector<string> ans;
+        int n = mat.size();
+        vector<vector<bool>> visited(n, vector<bool> (n,0));
+        if(mat[0][0]!=1){
+            return ans;
+        }
+        string path = "";
+        backtracking(0,0,mat, ans, visited , path);
+        return ans;
+    }
+};
