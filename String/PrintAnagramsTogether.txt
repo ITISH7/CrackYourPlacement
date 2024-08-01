@@ -1,0 +1,20 @@
+Question Link:-
+https://www.geeksforgeeks.org/problems/print-anagrams-together/1
+
+Solution:-
+class Solution{
+  public:
+    vector<vector<string> > Anagrams(vector<string>& strs) {
+        vector<vector<string>> ans;
+     unordered_map<string,vector<string>> map;
+     for(auto s : strs){
+        string temp = s;
+        sort(s.begin(),s.end());
+        map[s].push_back(temp);
+     } 
+     for(auto elem : map){
+        ans.push_back(elem.second);
+     }  
+     return ans;
+    }
+};
