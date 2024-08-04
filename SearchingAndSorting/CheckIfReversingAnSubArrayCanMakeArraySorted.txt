@@ -1,0 +1,120 @@
+Approach 1 :-
+The idea is to compare the given array with its sorted version. Make a copy of the given array and sort it. Now, find the first index and last index in the given array which does not match with the sorted array. If no such indices are found (given array was already sorted), return True. Else check if the elements between the found indices are in decreasing order, if Yes then return True else return False
+
+solution :- O (NLOGN)
+
+// C++ program to check whether reversing a 
+// sub array make the array sorted or not 
+#include<bits/stdc++.h> 
+using namespace std; 
+
+// Return true, if reversing the subarray will 
+// sort the array, else return false. 
+bool checkReverse(int arr[], int n) 
+{ 
+	// Copying the array. 
+	int temp[n]; 
+	for (int i = 0; i < n; i++) 
+		temp[i] = arr[i]; 
+
+	// Sort the copied array. 
+	sort(temp, temp + n); 
+
+	// Finding the first mismatch. 
+	int front; 
+	for (front = 0; front < n; front++) 
+		if (temp[front] != arr[front]) 
+			break; 
+
+	// Finding the last mismatch. 
+	int back; 
+	for (back = n - 1; back >= 0; back--) 
+		if (temp[back] != arr[back]) 
+			break; 
+
+	// If whole array is sorted 
+	if (front >= back) 
+		return true; 
+
+	// Checking subarray is decreasing or not. 
+	do
+	{ 
+		front++; 
+		if (arr[front - 1] < arr[front]) 
+			return false; 
+	} while (front != back); 
+
+	return true; 
+} 
+
+// Driver Program 
+int main() 
+{ 
+	int arr[] = { 1, 2, 5, 4, 3 }; 
+	int n = sizeof(arr)/sizeof(arr[0]); 
+
+	checkReverse(arr, n)? (cout << "Yes" << endl): 
+						(cout << "No" << endl); 
+	return 0; 
+} 
+
+
+
+Approach 2:-
+The idea to solve this problem is based on the observation that if we perform one rotation of any subarray in the sorted array (increasing order), then we there will be exactly one subarray which will be in decreasing order. So, we have to find that rotated subarray and perform one rotation on it. Finally check if the array becomes sorted or not.
+
+Initialize two variables x and y with -1.
+Iterate over the array.
+Find the first number for which a[i] > a[i+1] and store it into x. 
+Similarly, Store index i+1 as well into y, As this will keep track of the ending of the subarray which is needed to reverse.
+Check if x == -1 then array is already sorted so return true.
+Otherwise, reverse the array from index x to index y.
+Traverse the array to check for every element is sorted or not.
+If not sorted, return false.
+Finally, return true.
+
+solution:- O(n)
+
+
+#include <bits/stdc++.h> 
+using namespace std; 
+
+bool sortArr(int a[], int n) 
+{ 
+	int x = -1; 
+	int y = -1; 
+
+	for (int i = 0; i < n - 1; i++) { 
+		if (a[i] > a[i + 1]) { 
+			if (x == -1) { 
+				x = i; 
+			} 
+			y = i + 1; 
+		} 
+	} 
+
+	if (x != -1) { 
+		reverse(a + x, a + y + 1); 
+		for (int i = 0; i < n - 1; i++) { 
+			if (a[i] > a[i + 1]) { 
+				return false; 
+				return 0; 
+			} 
+		} 
+	} 
+
+	return true; 
+} 
+
+// Driver Program 
+int main() 
+{ 
+	int arr[] = { 1, 2, 5, 4, 3 }; 
+	int n = sizeof(arr) / sizeof(arr[0]); 
+
+	sortArr(arr, n) ? (cout << "Yes" << endl) 
+					: (cout << "No" << endl); 
+	return 0; 
+} 
+
+//This code is contributed by Shaurya Dixit (B19EE077)
